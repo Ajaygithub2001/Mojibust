@@ -83,13 +83,3 @@ Copy code
 .emoji {
     font-size: 30px; /* Adjust emoji size */
 }
-Contributing 💡
-Contributions are welcome! If you'd like to contribute to Mojibust, follow these steps:
-
-Fork the repository.
-Create a new branch (git checkout -b feature/YourFeature).
-Make your changes.
-Commit your changes (git commit -m 'Add some feature').
-Push to the branch (git push origin feature/YourFeature).
-Open a pull request.
-Please ensure that your changes are well-documented and tested before submitting a pull request.
