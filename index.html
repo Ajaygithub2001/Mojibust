@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> <!-- Disable zooming -->
     <title>Emoji Pop-Up</title>
     <style>
         body {
@@ -13,16 +13,6 @@
             height: 100vh;
             overflow: hidden;
             background-color: white; /* White background for the entire body */
-        }
-        #overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.5); /* Transparent white overlay */
-            display: none; /* Initially hidden */
-            z-index: 1; /* Behind the emoji container */
         }
         #emoji-container {
             position: fixed;
@@ -68,7 +58,6 @@
     </style>
 </head>
 <body>
-    <div id="overlay"></div>
     <div id="animation-container"></div>
 
     <div id="emoji-container">
@@ -140,12 +129,26 @@
         <span class="emoji">🛴</span>
         <span class="emoji">🪄</span>
         <span class="emoji">🪆</span>
+        <span class="emoji">🦋</span> <!-- New emoji -->
+        <span class="emoji">🌊</span> <!-- New emoji -->
+        <span class="emoji">🌸</span> <!-- New emoji -->
+        <span class="emoji">🍭</span> <!-- New emoji -->
+        <span class="emoji">🧊</span> <!-- New emoji -->
+        <span class="emoji">🎆</span> <!-- New emoji -->
+        <span class="emoji">⚽</span> <!-- New emoji -->
+        <span class="emoji">🏀</span> <!-- New emoji -->
+        <span class="emoji">🏈</span> <!-- New emoji -->
+        <span class="emoji">🥨</span> <!-- New emoji -->
+        <span class="emoji">🍾</span> <!-- New emoji -->
+        <span class="emoji">🧁</span> <!-- New emoji -->
+        <span class="emoji">🥤</span> <!-- New emoji -->
+        <span class="emoji">🌈</span> <!-- New emoji -->
+        <span class="emoji">🎀</span> <!-- New emoji -->
     </div>
 
     <script>
         const animationContainer = document.getElementById('animation-container');
         const emojiContainer = document.getElementById('emoji-container');
-        const overlay = document.getElementById('overlay');
 
         // Function to display emojis in the emoji container
         function displayEmojis(emojis) {
@@ -158,9 +161,9 @@
                 
                 // Add click event for the newly added emojis
                 emojiElement.addEventListener('click', (event) => {
-                    overlay.style.display = 'block'; // Show overlay
                     const numberOfEmojis = Math.floor(Math.random() * 2) + 3; // Generate 3 or 4 emojis
-                    const animationDelay = 300; // Base delay for animation
+                    const baseAnimationDelay = 500; // Base delay for animation
+                    const increment = 100; // Increment to decrease delay for each subsequent emoji
                     
                     for (let i = 0; i < numberOfEmojis; i++) {
                         const emojiCopy = document.createElement('span');
@@ -176,11 +179,11 @@
                         emojiCopy.style.top = `${startY}px`;
                         animationContainer.appendChild(emojiCopy); // Append the emoji to the container
 
-                        // Random delay for each emoji
-                        const randomDelay = Math.random() * 500; // Random delay up to 500ms
+                        // Calculate the delay for each emoji
+                        const randomDelay = Math.max(baseAnimationDelay - (i * increment), 0); // Slow delay initially, then speed up
                         setTimeout(() => {
                             animateEmoji(emojiCopy); // Start the animation with the delay
-                        }, randomDelay + (i * animationDelay)); // Cumulative delay
+                        }, randomDelay + (i * 200)); // Cumulative delay
                     }
                 });
             });
@@ -203,16 +206,13 @@
             "🌍", "🎮", "🤖", "🐶", "🐱", "🐻", "🦁", "🦉", "🍉", "🍌",
             "🍓", "🍎", "🍒", "🥥", "🍔", "🌭", "🍟", "🥗", "🥑", "🍪",
             "🍰", "🍿", "🍭", "🎀", "🌼", "🎨", "🎤", "🎧", "🎸", "🎹",
-            "🧩", "🎳", "🪅", "🪴", "🛴", "🪄", "🪆"
+            "🧩", "🎳", "🪅", "🪴", "🛴", "🪄", "🪆",
+            "🦋", "🌊", "🌸", "🍭", "🧊", "🎆", "⚽", "🏀", "🏈", "🥨",
+            "🍾", "🧁", "🥤", "🌈", "🎀" // New emojis added
         ];
 
         // Initial display of all emojis
         displayEmojis(predefinedEmojis);
-
-        // Close the overlay when clicked
-        overlay.addEventListener('click', () => {
-            overlay.style.display = 'none'; // Hide overlay
-        });
     </script>
 </body>
 </html>
