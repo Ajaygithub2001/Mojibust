@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Pop-Up with Search</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #emoji-search {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
+        }
+        #search-input {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #emoji-container {
+            position: fixed;
+            bottom: 10px; /* Positioning at the bottom */
+            right: 10px; /* Positioning at the right */
+            width: 75%; /* 75% of the screen width */
+            max-width: 600px; /* Max width for larger screens */
+            height: 60px; /* Fixed height for the tab */
+            overflow-x: scroll; /* Enable horizontal scrolling */
+            display: flex;
+            background-color: #f0f0f0;
+            border: 2px solid #ccc;
+            border-radius: 15px; /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+            padding: 10px;
+            box-sizing: border-box;
+            align-items: center; /* Center emojis vertically */
+        }
+        .emoji {
+            font-size: 30px; /* Increased emoji size */
+            margin: 0 10px; /* Spacing between emojis */
+            cursor: pointer;
+            transition: transform 0.2s; /* Transition for hover effect */
+        }
+        .emoji:hover {
+            transform: scale(1.2); /* Scale effect on hover */
+        }
+        #animation-container {
+            flex-grow: 1;
+            position: relative;
+            background-color: #e0e0e0;
+            width: 100%;
+            overflow: hidden;
+        }
+        .animated-emoji {
+            position: absolute;
+            font-size: 30px; /* Increased emoji size for animation */
+            opacity: 1; /* Make emoji fully visible */
+            transition: transform 1s ease, opacity 1s ease; /* Smooth animation */
+        }
+    </style>
+</head>
+<body>
+    <div id="emoji-search">
+        <input type="text" id="search-input" placeholder="Search for emojis..." />
+    </div>
+    <div id="animation-container"></div>
+
+    <div id="emoji-container">
+        <!-- Predefined emojis -->
+        <span class="emoji">😊</span>
+        <span class="emoji">😂</span>
+        <span class="emoji">😍</span>
+        <span class="emoji">🥳</span>
+        <span class="emoji">🤔</span>
+        <span class="emoji">😎</span>
+        <span class="emoji">🤯</span>
+        <span class="emoji">🙌</span>
+        <span class="emoji">🔥</span>
+        <span class="emoji">🌟</span>
+        <span class="emoji">💖</span>
+        <span class="emoji">🎉</span>
+        <span class="emoji">✨</span>
+        <span class="emoji">😇</span>
+        <span class="emoji">🎂</span>
+        <span class="emoji">🍀</span>
+        <span class="emoji">🎈</span>
+        <span class="emoji">🚀</span>
+        <span class="emoji">💃</span>
+        <span class="emoji">🕺</span>
+        <span class="emoji">🥇</span>
+        <span class="emoji">🎶</span>
+        <span class="emoji">🦄</span>
+        <span class="emoji">🧠</span>
+        <span class="emoji">🍕</span>
+        <span class="emoji">🍩</span>
+        <span class="emoji">🏆</span>
+        <span class="emoji">🌈</span>
+        <span class="emoji">☀️</span>
+        <span class="emoji">🌻</span>
+        <span class="emoji">🌍</span>
+        <span class="emoji">🎮</span>
+        <span class="emoji">🤖</span>
+        <span class="emoji">🐶</span>
+        <span class="emoji">🐱</span>
+        <span class="emoji">🐻</span>
+        <span class="emoji">🦁</span>
+        <span class="emoji">🦉</span>
+        <span class="emoji">🍉</span>
+        <span class="emoji">🍌</span>
+        <span class="emoji">🍓</span>
+        <span class="emoji">🍎</span>
+        <span class="emoji">🍒</span>
+        <span class="emoji">🥥</span>
+        <span class="emoji">🍔</span>
+        <span class="emoji">🌭</span>
+        <span class="emoji">🍟</span>
+        <span class="emoji">🥗</span>
+        <span class="emoji">🥑</span>
+        <span class="emoji">🍪</span>
+        <span class="emoji">🍰</span>
+        <span class="emoji">🍿</span>
+        <span class="emoji">🍭</span>
+        <span class="emoji">🎀</span>
+        <span class="emoji">🌼</span>
+        <span class="emoji">🎨</span>
+        <span class="emoji">🎤</span>
+        <span class="emoji">🎧</span>
+        <span class="emoji">🎸</span>
+        <span class="emoji">🎹</span>
+        <span class="emoji">🧩</span>
+        <span class="emoji">🎳</span>
+        <span class="emoji">🪅</span>
+        <span class="emoji">🪴</span>
+        <span class="emoji">🛴</span>
+        <span class="emoji">🌈</span>
+        <span class="emoji">🪄</span>
+        <span class="emoji">🪆</span>
+    </div>
+
+    <script>
+        const animationContainer = document.getElementById('animation-container');
+        const emojiContainer = document.getElementById('emoji-container');
+        const searchInput = document.getElementById('search-input');
+
+        // Function to display emojis in the emoji container
+        function displayEmojis(emojis) {
+            emojiContainer.innerHTML = ''; // Clear previous emojis
+            emojis.forEach(emoji => {
+                const emojiElement = document.createElement('span');
+                emojiElement.classList.add('emoji');
+                emojiElement.textContent = emoji;
+                emojiContainer.appendChild(emojiElement);
+                
+                // Add click event for the newly added emojis
+                emojiElement.addEventListener('click', (event) => {
+                    const numberOfEmojis = Math.floor(Math.random() * 2) + 3; // Generate 3 or 4 emojis
+                    const animationDelay = 300; // Base delay for animation
+                    
+                    for (let i = 0; i < numberOfEmojis; i++) {
+                        const emojiCopy = document.createElement('span');
+                        emojiCopy.classList.add('animated-emoji');
+                        emojiCopy.textContent = emoji;
+
+                        // Position at the point of tap with slight random offset
+                        const rect = animationContainer.getBoundingClientRect();
+                        const startX = event.clientX - rect.left + (i * 20); // Offset each emoji slightly to the right
+                        const startY = event.clientY - rect.top;
+
+                        animationContainer.appendChild(emojiCopy); // Append the emoji to the container
+
+                        // Random delay for each emoji
+                        const randomDelay = Math.random() * 500; // Random delay up to 500ms
+                        setTimeout(() => {
+                            animateEmoji(emojiCopy, startX, startY); // Start the animation with the delay
+                        }, randomDelay + (i * animationDelay)); // Cumulative delay
+                    }
+                });
+            });
+        }
+
+        // Function to animate the emoji upward from the tap point
+        function animateEmoji(emojiCopy, startX, startY) {
+            emojiCopy.style.left = `${startX}px`;
+            emojiCopy.style.top = `${startY}px`;
+
+            // Move the emoji upward and fade out
+            setTimeout(() => {
+                emojiCopy.style.transform = 'translateY(-100vh)'; // Move up the screen
+                emojiCopy.style.opacity = '0'; // Fade out effect
+            }, 0);
+        }
+
+        // Predefined list of emojis
+        const predefinedEmojis = [
+            "😊", "😂", "😍", "🥳", "🤔", "😎", "🤯", "🙌", "🔥", "🌟", 
+            "💖", "🎉", "✨", "😇", "🎂", "🍀", "🎈", "🚀", "💃", "🕺", 
+            "🥇", "🎶", "🦄", "🧠", "🍕", "🍩", "🏆", "🌈", "☀️", "🌻", 
+            "🌍", "🎮", "🤖", "🐶", "🐱", "🐻", "🦁", "🦉", "🍉", "🍌",
+            "🍓", "🍎", "🍒", "🥥", "🍔", "🌭", "🍟", "🥗", "🥑", "🍪",
+            "🍰", "🍿", "🍭", "🎀", "🌼", "🎨", "🎤", "🎧", "🎸", "🎹",
+            "🧩", "🎳", "🪅", "🪴", "🛴", "🌈", "🪄", "🪆"
+        ];
+
+        // Event listener for the search input
+        searchInput.addEventListener('input', (event) => {
+            const searchTerm = event.target.value.toLowerCase();
+            const filteredEmojis = predefinedEmojis.filter(emoji => emoji.includes(searchTerm));
+            displayEmojis(filteredEmojis);
+        });
+
+        // Initial display of all emojis
+        displayEmojis(predefinedEmojis);
+    </script>
+</body>
+</html>
