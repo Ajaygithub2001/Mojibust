@@ -147,9 +147,13 @@
         <span class="emoji">🎀</span> <!-- New emoji -->
     </div>
 
+    <!-- Add a sound element -->
+    <audio id="pop-sound" src="pop-sound.mp3"></audio> <!-- Add the pop sound file -->
+
     <script>
         const animationContainer = document.getElementById('animation-container');
         const emojiContainer = document.getElementById('emoji-container');
+        const popSound = document.getElementById('pop-sound'); // Reference the sound element
 
         // Function to display emojis in the emoji container
         function displayEmojis(emojis) {
@@ -162,6 +166,7 @@
                 
                 // Add click event for the newly added emojis
                 emojiElement.addEventListener('click', (event) => {
+                    popSound.play(); // Play the pop sound on emoji click
                     const numberOfEmojis = Math.floor(Math.random() * 2) + 3; // Generate 3 or 4 emojis
                     const baseAnimationDelay = 500; // Base delay for animation
                     const increment = 100; // Increment to decrease delay for each subsequent emoji
@@ -208,7 +213,8 @@
             "🍓", "🍎", "🍒", "🥥", "🍔", "🌭", "🍟", "🥗", "🥑", "🍪",
             "🍰", "🍿", "🍭", "🎀", "🌼", "🎨", "🎤", "🎧", "🎸", "🎹",
             "🧩", "🎳", "🪅", "🪴", "🛴", "🪄", "🪆",
-            "🦋", "🌊", "🌸", "🍭", "🧊", "🎆", "⚽", "🏀", "🏈", "🥨",
+            "🦋", "🌊", "🌸", "🍭", "🧊", "🎆"
+, "⚽", "🏀", "🏈", "🥨",
             "🍾", "🧁", "🥤", "🌈", "🎀" // New emojis added
         ];
 
